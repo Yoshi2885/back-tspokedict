@@ -113,11 +113,13 @@ server.get("/randomtest", async (req, res) => {
 
 server.post("/postans", async (req, res) => {
   console.log("POSTされました");
-  console.log("body", req.body);
   await db("pokedict")
     .insert({
       user_id: 1,
       pokemon_id: req.body.pokemon_id,
+      eng_name: req.body.eng_name,
+      jp_name: req.body.jp_name,
+      img_url: req.body.img_url,
       correct_or_incorrect: req.body.value,
     })
     .then(() => {
