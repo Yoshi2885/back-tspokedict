@@ -9,7 +9,7 @@ const db = require("knex")(knexConfig);
 const server = express();
 server.use(express.json());
 server.use(cors({ origin: "http://localhost:5173" }));
-app.use(express.static("public"));
+server.use(express.static("public"));
 
 const PORT = process.env.PORT || 3000;
 
