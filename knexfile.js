@@ -19,13 +19,8 @@ module.exports = {
   },
 
   production: {
-    client: "postgresql",
+    client: "pg",
     connection: process.env.DATABASE_URL,
-    // connection: {
-    //   database: "pokedicts",
-    //   // user: DB_USER,
-    //   // password: DB_PASSWORD,
-    // },
     migrations: {
       directory: "./migrations",
     },
