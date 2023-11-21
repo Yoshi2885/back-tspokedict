@@ -1,5 +1,7 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
+
 // knexのセットアップ
 const knexConfig = require("../knexfile").development;
 const db = require("knex")(knexConfig);
@@ -7,6 +9,7 @@ const db = require("knex")(knexConfig);
 const server = express();
 server.use(express.json());
 server.use(cors({ origin: "http://localhost:5173" }));
+app.use(express.static("public"));
 
 const PORT = process.env.PORT || 3000;
 
@@ -79,7 +82,8 @@ server.listen(PORT, () => {
 
 server.get("/", (req, res) => {
   res.status(200);
-  res.send("connect");
+  // res.send("connect");
+  res.sendFile("/index.html");
 });
 
 server.get("/pokedict", async (req, res) => {
