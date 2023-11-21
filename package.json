@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha test",
+    "testmon": "nodemon ./node_modules/mocha/bin/mocha.js",
     "build": "npm install",
-    "start": "node ./src/server.js",
-    "startmon": "nodemon ./src/server.js",
+    "start": "node ./src/index.js",
+    "startmon": "nodemon ./src/index.js",
     "migrate": "knex migrate:latest",
     "makeMigration": "knex migrate:make",
     "seed": "knex seed:run",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "chai": "^4.3.10",
+    "chai-http": "^4.4.0",
     "mocha": "^10.2.0",
     "nodemon": "^3.0.1"
   },
