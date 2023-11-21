@@ -31,6 +31,14 @@ const randomePokeObj = async () => {
   const litchDataArr = await Promise.all(promises);
   return [litchDataArr, null, null];
 };
+const selectedPokeObj = async (poke_id) => {
+  const urlArr = [`https://pokeapi.co/api/v2/pokemon/${poke_id}`];
+  const promises = await urlArr.map((url) =>
+    fetch(url).then((res) => res.json())
+  );
+  const litchDataArr = await Promise.all(promises);
+  return [litchDataArr, null, null];
+};
 // urlから日本語名を探してくる
 const getJPName = async (pokeObj) => {
   const urlArr = pokeObj.map((poke) => poke.species.url);
@@ -94,7 +102,6 @@ server.get("/pokedict", async (req, res) => {
 
 server.get("/randomtest", async (req, res) => {
   try {
-    console.log("test_access");
     const [litchDataArr, nextURL, prevURL] = await randomePokeObj();
     const jpNameArr = await getJPName(litchDataArr);
     const imgURLArr = await getImgURL(litchDataArr);
@@ -112,7 +119,6 @@ server.get("/randomtest", async (req, res) => {
 });
 
 server.post("/postans", async (req, res) => {
-  console.log("POSTされました");
   await db("pokedict")
     .insert({
       user_id: 1,
@@ -131,12 +137,12 @@ server.post("/postans", async (req, res) => {
       res.status(500).send("データの挿入エラー");
     });
 
-  await db
-    .select("*")
-    .from("pokedict")
-    .then((data) => {
-      console.log("テーブルのデータ", data);
-    });
+  // await db
+  //   .select("*")
+  //   .from("pokedict")
+  //   .then((data) => {
+  //     console.log("テーブルのデータ", data);
+  //   });
 });
 
 server.get("/table", async (req, res) => {
@@ -146,6 +152,34 @@ server.get("/table", async (req, res) => {
     .where("correct_or_incorrect", false)
     .then((data) => data);
   res.status(200).send(sendTable);
+});
+
+server.get("/retry", async (req, res) => {
+  const sendTable = await db
+    .select("pokemon_id")
+    .from("pokedict")
+    .where("correct_or_incorrect", false)
+    .then((data) => data);
+  // ランダムにindexを選ぶ
+  const randomIndex = Math.floor(Math.random() * sendTable.length);
+  const getRandomId = sendTable[randomIndex].pokemon_id;
+
+  // 図鑑番号からポケモンの情報を拾う
+  try {
+    const [litchDataArr, nextURL, prevURL] = await selectedPokeObj(getRandomId);
+    const jpNameArr = await getJPName(litchDataArr);
+    const imgURLArr = await getImgURL(litchDataArr);
+    const resData = await makePokeObj(
+      litchDataArr,
+      jpNameArr,
+      imgURLArr,
+      nextURL,
+      prevURL
+    );
+    res.status(200).send(resData);
+  } catch (error) {
+    res.status(500).send("error");
+  }
 });
 
 server.get("/error", (req, res) => {
