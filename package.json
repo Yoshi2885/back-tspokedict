@@ -12,7 +12,7 @@
     "makeMigration": "knex migrate:make",
     "seed": "knex seed:run",
     "makeSeed": "knex seed:make",
-    "add_script": "npm run build && npm run migrate-latest"
+    "add_script": "npm run build && npm run migrate"
   },
   "keywords": [],
   "author": "tanachu",
