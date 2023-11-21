@@ -139,6 +139,15 @@ server.post("/postans", async (req, res) => {
     });
 });
 
+server.get("/table", async (req, res) => {
+  const sendTable = await db
+    .select("*")
+    .from("pokedict")
+    .where("correct_or_incorrect", false)
+    .then((data) => data);
+  res.status(200).send(sendTable);
+});
+
 server.get("/error", (req, res) => {
   res.render("pages/error");
 });
