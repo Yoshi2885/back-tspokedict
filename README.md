@@ -8,13 +8,29 @@
 
 今は、1000 匹以上いる。地獄絵図。
 
+我が子「パパー。このポケモンなんて名前〜？」
+
+![poke-store](public/poke-store.jpeg)
+
+自分「😀 シラネ」
+
+???「ラジオ体操しまーす」
+
+![poke-store](public/ruka.jpeg)
+
+自分「😀 誰？」
+
+英単語も覚えてないが、ポケモンの名前も覚えないと…。
+
+そうだ！💡
+
 ## やりたいこと
 
-ポケモン図鑑をみたい。
+PokeAPI の叩き方覚えたし、ポケモン図鑑を作ってみたい。
 
-ポケモン言えるかなに挑戦だ。
+さあ、ポケモン言えるかなに挑戦だ。
 
-更にテスト機能、復習機能も実装！
+テスト機能、復習機能も実装したよ！
 
 ## set up 手順
 
@@ -42,33 +58,24 @@
 
 ER 図は下記の通り。
 
-なお、google ログイン認証機能を実装予定。それに伴い user テーブルが今後追加される。
-
-## DB の構造
-
 ```mermaid
 erDiagram
-  user ||--o{ testdata: "ユーザーidと名前を紐付ける"
-    user {
-      bigint id PK
-      string name "ユーザー名"
-    }
-    pokedict {
-      int(32) id PK
-      int(8) user_id
-      int(8) pokemon_id "図鑑番号"
-      string(16) eng_name "英語名"
-      string(16) jp_name "日本語名"
-      string(256) img_url "画像用url"
-      boolean correct_or_incorrect "正誤判定"
+  pokedict {
+    int(32) id PK
+    int(8) user_id
+    int(8) pokemon_id "図鑑番号"
+    string(16) eng_name "英語名"
+    string(16) jp_name "日本語名"
+    string(256) img_url "画像用url"
+    boolean correct_or_incorrect "正誤判定"
     }
 
 ```
 
 ユーザー名を取得しておいて、その値と正誤判定結果から間違えたポケモンのリストを取得する。
-一度でも間違えたポケモンが苦手リストに入るような形。
+間違えたポケモンが苦手リストに入るような形。
 
-間違えたポケモンだけで出題できるようにする。
+再テストコーナーでは DB 城の記録から、間違えたポケモンだけで出題されます。
 
 ## 今後実装予定機能
 
@@ -76,7 +83,7 @@ erDiagram
 
 グーグルアカウントを用いたログイン認証。
 
-ユーザーごとに苦手リストを保持できるように修正。
+認証情報を元にユーザーごとに苦手リストを保持できるように修正。
 
 ## 実施項目
 
@@ -110,3 +117,13 @@ erDiagram
   - [x] a. Render(無料)
 - [ ] 9. Passport.js でログイン機能が実装されている
   - [ ] a. https://www.passportjs.org/
+
+## デプロイ先
+
+Render を使ってデプロイしました。
+
+リンクはこちら
+
+https://pokedict.onrender.com/
+
+以上。
