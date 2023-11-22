@@ -47,10 +47,12 @@ PokeAPI の叩き方覚えたし、ポケモン図鑑を作ってみたい。
    4. の 3 行を.env フォルダに記述
 6. マイグレーションを行う`npm run migrate`
 7. `npm run start`でサーバーを起動
-8. `https://github.com/Yoshi2885/tspokedict` にアクセス
-9. 同じく git clone
-10. clone したフォルダに cd コマンドで移動
-11. `npm isntall`
+8. `cd frontend` でクライアント側のフォルダへ移動
+9. `npm isntall`
+10. .env.develop を作成
+11. `VITE_API_URL=http://localhost:3000/`を記入
+    1. デプロイする場合は本番環境用の URL を.env.production に記入
+    2. `VITE_API_URL=[あなたのURL]`を記入
 12. `npm run dev` でフロントエンド側がレンダリングされます。
 13. `http://localhost:5173` に Chrome でアクセスしてください
 
